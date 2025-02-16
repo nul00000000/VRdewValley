@@ -1,3 +1,6 @@
 [submodule "OpenXR"]
 	path = OpenXR
 	url = https://github.com/KhronosGroup/OpenXR-SDK.git
+[submodule "glfw"]
+	path = glfw
+	url = https://github.com/glfw/glfw.git

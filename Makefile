@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -IOpenXR/include
+CFLAGS = -IOpenXR/include -Iglad/include -Iglfw/include
 
 SOURCES = main.cpp
 OBJS = $(SOURCES:.cpp=.o)
