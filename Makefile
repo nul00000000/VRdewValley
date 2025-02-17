@@ -5,7 +5,7 @@ SOURCES = main.cpp
 OBJS = $(SOURCES:.cpp=.o) glad.o
 
 GLFW_OBJS = glfw/build/src/CMakeFiles/glfw.dir/*.c.obj
-TARGET = vdv.exe
+TARGET = a.exe
 
 .PHONY: all clean
 
