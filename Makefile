@@ -2,15 +2,23 @@ CC = g++
 CFLAGS = -IOpenXR/include -Iglad/include -Iglfw/include
 
 SOURCES = main.cpp
-OBJS = $(SOURCES:.cpp=.o)
+OBJS = $(SOURCES:.cpp=.o) glad.o
+
+GLFW_OBJS = glfw/build/src/CMakeFiles/glfw.dir/*.c.obj
 TARGET = vdv.exe
 
-.PHONY: all
+.PHONY: all clean
 
 all: $(TARGET)
 
+clean:
+	rm -rf $(OBJS) $(TARGET)
+
 $(TARGET): $(OBJS)
-	$(CC) $^ -o $(TARGET)
+	$(CC) $^ $(GLFW_OBJS) -lgdi32 -o $(TARGET)
 
 %.o: %.cpp
 	$(CC) $(CFLAGS) -c $*.cpp
+
+glad.o: glad/src/glad.c
+	$(CC) $(CFLAGS) -c $^
