@@ -8,3 +8,5 @@ use
 
 in the glfw/build directory on windows to rizz up the haters and probably
 something different on linux
+
+(and then use make on the resulting Makefile)
