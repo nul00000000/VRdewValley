@@ -1,12 +1,15 @@
 #include <stdio.h>
 
 #include <openxr/openxr.h>
+#ifndef GL_INCLUDED
+#define GL_INCLUDED
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#endif
 
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
-#define WINDOW_TITLE "i hate unreal engine with a passion"
+#define WINDOW_TITLE "SPEX VR Project"
 
 int main() {
 	if(!glfwInit()) {
@@ -37,7 +40,7 @@ int main() {
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.3f, 0.9f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glfwSwapBuffers(window);
