@@ -24,8 +24,11 @@ $(TARGET): $(OBJS)
 	$(CC) $^ $(GLFW_OBJS) -lgdi32 -o $(TARGET)
 	@echo "Totally Unreal Engine is real"
 
-$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp
+$(OBJ_DIR):
+	mkdir $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $(SOURCE_DIR)/$*.cpp -o $(OBJ_DIR)/$*.o
 
-$(OBJ_DIR)/$(GLAD_OBJ): glad/src/glad.c
+$(OBJ_DIR)/$(GLAD_OBJ): glad/src/glad.c $(OBJ_DIR)
 	$(CC) $(CFLAGS) -c $^ -o $(OBJ_DIR)/$(GLAD_OBJ)
