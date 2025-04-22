@@ -1,23 +1,23 @@
 #include "shader.h"
 
-BasicShader::BasicShader(GLint screenWidth, GLint screenHeight) : Shader((GLchar*)"C:/Users/Admin/source/repos/VRGame/VRGame/shaders/basic") {//remember to change these when you actually release it
+BasicShader::BasicShader(GLint screenWidth, GLint screenHeight) : Shader((GLchar*)"C:/Users/nulcr/Documents/VRDewValley/shaders/basic") {//remember to change these when you actually release it
 	GLint p;
 
-	string a((GLchar*)"C:/Users/Admin/source/repos/VRGame/VRGame/shaders/basic");
-	const char* c_str = readFile((char*)(a + ".geom").c_str());
-	geometryShaderID = glCreateShader(GL_GEOMETRY_SHADER);
+	// string a((GLchar*)"C:/Users/nulcr/Documents/VRDewValley/shaders/basic");
+	//const char* c_str = readFile((char*)(a + ".geom").c_str());
+	//geometryShaderID = glCreateShader(GL_GEOMETRY_SHADER);
 
-	glShaderSource(geometryShaderID, 1, &c_str, NULL);
-	glCompileShader(geometryShaderID);
+	//glShaderSource(geometryShaderID, 1, &c_str, NULL);
+	//glCompileShader(geometryShaderID);
 
-	glGetShaderiv(geometryShaderID, GL_COMPILE_STATUS, &p);
-	if (!p) {
-		fprintf(stderr, "Geometry shader didn't work go debug it dumbass\n");
-	}
+	// glGetShaderiv(geometryShaderID, GL_COMPILE_STATUS, &p);
+	// if (!p) {
+	// 	fprintf(stderr, "Geometry shader didn't work go debug it dumbass\n");
+	// }
 	
-	delete[] c_str;
+	// delete[] c_str;
 
-	glAttachShader(programID, geometryShaderID);
+	// glAttachShader(programID, geometryShaderID);
 
 	bindAttributes();
 
@@ -32,42 +32,6 @@ BasicShader::BasicShader(GLint screenWidth, GLint screenHeight) : Shader((GLchar
 	glGetProgramiv(programID, GL_VALIDATE_STATUS, &p);
 	if (!p) {
 	    fprintf(stderr, "The program won't validate, what the fuck did you do\n");
-	}
-}
-
-BasicShader::BasicShader() : Shader((GLchar*)"C:/Users/Admin/source/repos/VRGame/VRGame/shaders/basic") {
-	GLint p;
-
-	string a((GLchar*)"C:/Users/Admin/source/repos/VRGame/VRGame/shaders/basic");
-	const char* c_str = readFile((char*)(a + ".geom").c_str());
-	geometryShaderID = glCreateShader(GL_GEOMETRY_SHADER);
-
-	glShaderSource(geometryShaderID, 1, &c_str, NULL);
-	glCompileShader(geometryShaderID);
-
-	glGetShaderiv(geometryShaderID, GL_COMPILE_STATUS, &p);
-	if (!p) {
-		fprintf(stderr, "Geometry shader didn't work go debug it dumbass\n");
-	}
-
-	delete[] c_str;
-
-	glAttachShader(programID, geometryShaderID);
-
-	bindAttributes();
-
-	glLinkProgram(programID);
-	glGetProgramiv(programID, GL_LINK_STATUS, &p);
-	if (p) {
-		fprintf(stderr, "The program won't link, what the fuck did you do");
-	}
-
-	getUniforms();
-
-	glValidateProgram(programID);
-	glGetProgramiv(programID, GL_VALIDATE_STATUS, &p);
-	if (p) {
-		fprintf(stderr, "The program won't validate, what the fuck did you do");
 	}
 }
 

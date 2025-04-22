@@ -4,7 +4,7 @@ CFLAGS = -IOpenXR/include -Iglad/include -Iglfw/include -Iglm
 SOURCE_DIR = src
 OBJ_DIR = objs
 
-SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp
+SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp
 SOURCES = $(addprefix $(SOURCE_DIR)/, $(SOURCE_NAMES))
 GLAD_OBJ = glad.o
 OBJ_NAMES = $(SOURCE_NAMES:.cpp=.o) $(GLAD_OBJ)
