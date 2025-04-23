@@ -19,6 +19,8 @@ class VRManager {
         void GetInstanceProperties();
         void GetSystemID();
         void PollSystemEvents();
+        void CreateSession();
+        void DestroySession();
 
         XrInstance xrInstance = {};
         std::vector<const char *> activeAPILayers = {};
@@ -33,6 +35,10 @@ class VRManager {
         XrSystemProperties systemProperties = {XR_TYPE_SYSTEM_PROPERTIES};
 
         GraphicsAPI_Type apiType = UNKNOWN;
+
+        std::unique_ptr<GraphicsAPI> graphicsAPI = nullptr;
+
+        XrSession session = XR_NULL_HANDLE;
 
         bool applicationRunning = true;
         bool sessionRunning = false;
