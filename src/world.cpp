@@ -52,6 +52,8 @@ World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 	entities.push_back(
 		Entity((glm::vec3) {1.0f, 0.6f, -1.0f}, new Model(Model::cubeVertices(.1, .1, .2),108,0.5,0.5,0.5,false))
 	);
+
+	power = new Power(1.0, 2.0);
 }
 
 World::~World() {
@@ -67,4 +69,8 @@ void World::render(BasicShader* shader) {
 		entity.render(shader);
 		entity.rotate({0.0f, 0.001f * ((float) rand())/RAND_MAX, 0.0f});
 	}
+}
+
+double World::getWeather(double t) {
+	return glm::perlin((glm::vec2) {t*0.001,0});
 }

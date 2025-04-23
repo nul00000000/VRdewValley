@@ -51,12 +51,18 @@ void mainGame() {
 	shader->loadProjection(projMat);
 	shader->loadSkyLight({1.0f,1.0f,1.0f});
 
+	double t;
+
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
 		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-		glClearColor(0.3f, 0.9f, 0.5f, 1.0f);
+		double weather = world.getWeather(t);
+
+		t++;
+
+		glClearColor(0.9f*weather, 0.1f*weather, 0.2f*weather, 1.0f);
 		glEnable(GL_DEPTH_TEST);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
