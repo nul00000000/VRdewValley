@@ -67,6 +67,8 @@ void mainGame() {
 	shader->loadProjection(projMat);
 	shader->loadSkyLight({1.0f,1.0f,1.0f});
 
+	double t;
+
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
