@@ -10,6 +10,7 @@ class VRManager {
         ~VRManager();
 
         void run();
+        void destroy();
     private:
         void CreateInstance();
         void DestroyInstance();
