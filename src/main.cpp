@@ -72,5 +72,5 @@ void mainGame() {
 
 int main() {
 	// mainGame();
-	VRManager vr(OPENGL);
+	VRManager vr;
 }

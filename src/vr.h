@@ -1,45 +1,9 @@
 #pragma once
 
-#include <openxr/openxr.h>
-#include <openxr/openxr_platform.h>
-#include <GraphicsAPI_OpenGL.h>
+#include "openvr.h"
 
 class VRManager {
     public:
-        VRManager(GraphicsAPI_Type apiType);
+        VRManager();
         ~VRManager();
-
-        void run();
-        void destroy();
-    private:
-        void CreateInstance();
-        void DestroyInstance();
-        void CreateDebugMessager();
-        void DestroyDebugMessager();
-        void GetInstanceProperties();
-        void GetSystemID();
-        void PollSystemEvents();
-        void CreateSession();
-        void DestroySession();
-
-        XrInstance xrInstance = {};
-        std::vector<const char *> activeAPILayers = {};
-        std::vector<const char *> activeInstanceExtensions = {};
-        std::vector<std::string> apiLayers = {};
-        std::vector<std::string> instanceExtensions = {};
-
-        XrDebugUtilsMessengerEXT debugUtilsMessenger = {};
-
-        XrFormFactor formFactor = XR_FORM_FACTOR_HEAD_MOUNTED_DISPLAY;
-        XrSystemId systemID = {};
-        XrSystemProperties systemProperties = {XR_TYPE_SYSTEM_PROPERTIES};
-
-        GraphicsAPI_Type apiType = UNKNOWN;
-
-        std::unique_ptr<GraphicsAPI> graphicsAPI = nullptr;
-
-        XrSession session = XR_NULL_HANDLE;
-
-        bool applicationRunning = true;
-        bool sessionRunning = false;
 };

@@ -1,14 +1,12 @@
 .SILENT:
 
 CC = g++
-CFLAGS := -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -Isrc/Common -DXR_USE_GRAPHICS_API_OPENGL -DSHADER_BASE=$(shell pwd)
-
--include adam.make
+CFLAGS := -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -Iheaders -DSHADER_BASE=$(shell pwd)
 
 SOURCE_DIR = src
 OBJ_DIR = objs
 
-SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp entity.cpp vr.cpp Common/GraphicsAPI_OpenGL.cpp Common/GraphicsAPI.cpp Common/OpenXRDebugUtils.cpp
+SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp entity.cpp vr.cpp
 HEADER_NAMES = shader.h light.h vr.h world.h model.h entity.h
 SOURCES = $(addprefix $(SOURCE_DIR)/, $(SOURCE_NAMES))
 GLAD_OBJ = glad.o
@@ -17,7 +15,9 @@ HEADERS = $(addprefix $(SOURCE_DIR)/, $(HEADER_NAMES));
 OBJS = $(addprefix $(OBJ_DIR)/, $(OBJ_NAMES))
 
 GLFW_OBJS = $(wildcard glfw/build/src/CMakeFiles/glfw.dir/*.c.o glfw/build/src/CMakeFiles/glfw.dir/*.c.obj)
-TARGET = vdv
+TARGET := vdv
+
+-include adam.make
 
 .PHONY: all clean
 
