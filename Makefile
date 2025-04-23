@@ -29,7 +29,7 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $^ $(GLFW_OBJS) $(MEOW) -o $(TARGET)
+	$(CC) $^ $(GLFW_OBJS) $(WYATT_FLAGS) $(MEOW) -o $(TARGET)
 	echo "Totally Unreal Engine is real"
 
 $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADERS)
@@ -38,5 +38,4 @@ $(OBJ_DIR)/%.o: $(SOURCE_DIR)/%.cpp $(HEADERS)
 	$(CC) $(CFLAGS) -c $(SOURCE_DIR)/$*.cpp -o $(OBJ_DIR)/$*.o
 
 $(OBJ_DIR)/$(GLAD_OBJ): glad/src/glad.c
-	echo "Linking..."
 	$(CC) $(CFLAGS) -c $^ -o $(OBJ_DIR)/$(GLAD_OBJ)
