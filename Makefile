@@ -1,7 +1,9 @@
 .SILENT:
 
+-include wyatt.make
+
 CC = g++
-CFLAGS := -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -Iheaders -DSHADER_BASE=$(shell pwd)
+CFLAGS := -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -Iheaders -DSHADER_BASE=$(shell pwd) $(WYATT_FLAGS)
 
 SOURCE_DIR = src
 OBJ_DIR = objs

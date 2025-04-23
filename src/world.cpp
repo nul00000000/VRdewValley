@@ -23,7 +23,7 @@ World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 	this->entities = std::vector<Entity>();
 
 	entities.push_back(
-		Entity((glm::vec3) {0.0f, 0.6f, -1.0f}, new Model(Model::cubeVertices(1, 1, 1),72,0.5,0.5,0.5,false))
+		Entity((glm::vec3) {0.0f, 0.6f, -1.0f}, new Model(Model::cubeVertices(1, 1, 1),108,0.5,0.5,0.5,false))
 	);
 }
 
@@ -33,9 +33,11 @@ World::~World() {
 
 void World::render(BasicShader* shader) {
 	shader->loadTransform(glm::identity<glm::mat4>(), 0.3f);
+
 	terrainMesh->render();
+
 	for (auto &entity : entities) {
 		entity.render(shader);
-		entity.rotate({0.1f, 0.1f, 0.1f});
+		entity.rotate({0.0f, 0.1f, 0.0f});
 	}
 }

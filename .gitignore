@@ -1,6 +1,8 @@
 *.o
 *.exe
+vdv
 .vscode
 
 adam.make
+wyatt.make
 openvr

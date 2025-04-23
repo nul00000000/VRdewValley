@@ -28,7 +28,7 @@ void main(void) {
     // int a = (d1 < d2 && d1 < d3) ? 0 : (d2 < d3 ? 1 : 2);
     vec3 norm = normalize(pNormal);
     //vec3 lightDir = normalize(light - fragPos);
-    vec3 ambient = vec3(0.1) * colorPass;
+    vec3 ambient = vec3(0.5) * colorPass;
 
     vec3 totalDiffuse = vec3(0);
     for(int i = 0; i < lightCount; i++) {

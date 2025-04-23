@@ -46,11 +46,11 @@ void mainGame() {
 	shader->use();
 	World world(1, 1, 1.0, 1.0);
 
-	glm::vec3 camPos(0.0f, 1.0f, -1.0f);
+	glm::vec3 camPos(0.0f, 1.0f, 1.0f);
 	glm::mat4 camMat;
 	glm::mat4 projMat;
-	camMat = glm::translate(glm::identity<glm::mat4>(), camPos);
-	projMat = glm::perspective(35.0f, 9.0f/16.0f, 0.1f, 100.0f);
+	camMat = glm::translate(glm::identity<glm::mat4>(), -camPos);
+	projMat = glm::perspective(glm::radians(75.0f), 16.0f/9.0f, 0.1f, 180.0f);
 
 	shader->loadCamera(camMat);
 	shader->loadProjection(projMat);
@@ -60,7 +60,8 @@ void mainGame() {
 		glfwPollEvents();
 
 		glClearColor(0.3f, 0.9f, 0.5f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		glEnable(GL_DEPTH_TEST);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		world.render(shader);
 		// terrainMesh->render();
@@ -71,6 +72,6 @@ void mainGame() {
 }
 
 int main() {
-	// mainGame();
+	mainGame();
 	VRManager vr;
 }
