@@ -10,8 +10,8 @@
 #include "shader.h"
 #include "world.h"
 
-#define WINDOW_WIDTH 1280
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 640
+#define WINDOW_HEIGHT 360
 #define WINDOW_TITLE "SPEX VR Project"
 
 int main() {
@@ -40,7 +40,7 @@ int main() {
 			XR_VERSION_PATCH(xrVersion), glfwMajor, glfwMinor, glfwRev,
 			GLVersion.major, GLVersion.minor);
 
-	BasicShader* shader = new BasicShader(1280, 720);
+	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
 	World world(1, 1, 1.0, 1.0);
 
