@@ -23,7 +23,7 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $^ $(GLFW_OBJS) -lgdi32 -o $(TARGET)
+	$(CC) $^ $(GLFW_OBJS) $(MEOW) -o $(TARGET)
 	@echo "Totally Unreal Engine is real"
 
 $(OBJ_DIR):
