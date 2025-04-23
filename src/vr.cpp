@@ -143,7 +143,7 @@ void VRManager::GetSystemID() {
 void VRManager::CreateSession() {
     XrSessionCreateInfo sessionCI{XR_TYPE_SESSION_CREATE_INFO};
 
-    graphicsAPI = std::make_unique<GraphicsAPI>(xrInstance, systemID);// this is modified
+    graphicsAPI = std::make_unique<GraphicsAPI_OpenGL>(xrInstance, systemID);// this is modified
 
     sessionCI.next = graphicsAPI->GetGraphicsBinding();
     sessionCI.createFlags = 0;

@@ -17,12 +17,12 @@
 #include <vector>
 
 // Debugbreak
-#if defined(_MSC_VER)
-#define DEBUG_BREAK __debugbreak()
-#else
-#include <signal.h>
-#define DEBUG_BREAK raise(SIGTRAP)
-#endif
+// #if defined(_MSC_VER)
+// #define DEBUG_BREAK __debugbreak()
+// #else
+// #include <signal.h>
+// #define DEBUG_BREAK raise(SIGTRAP)
+// #endif
 
 // XR_DOCS_TAG_BEGIN_Helper_Functions1
 inline bool IsStringInVector(std::vector<const char *> list, const char *name) {
@@ -52,13 +52,13 @@ inline std::string GetEnv(const std::string &variable) {
     return value != nullptr ? std::string(value) : std::string("");
 }
 
-inline void SetEnv(const std::string &variable, const std::string &value) {
-#if defined(_MSC_VER)
-    _putenv_s(variable.c_str(), value.c_str());
-#else
-    setenv(variable.c_str(), value.c_str(), 1);
-#endif
-}
+// inline void SetEnv(const std::string &variable, const std::string &value) {
+// #if defined(_MSC_VER)
+//     _putenv_s(variable.c_str(), value.c_str());
+// #else
+//     setenv(variable.c_str(), value.c_str(), 1);
+// #endif
+// }
 
 inline std::string ReadTextFile(const std::string &filepath) {
     std::ifstream stream(filepath, std::fstream::in);

@@ -10,6 +10,8 @@
 #include "shader.h"
 #include "world.h"
 
+#include "vr.h"
+
 #define WINDOW_WIDTH 640
 #define WINDOW_HEIGHT 360
 #define WINDOW_TITLE "SPEX VR Project"
@@ -69,5 +71,6 @@ void mainGame() {
 }
 
 int main() {
-	mainGame();
+	// mainGame();
+	VRManager vr(OPENGL);
 }
