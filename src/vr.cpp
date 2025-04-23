@@ -2,9 +2,14 @@
 
 #include "Common/OpenXRHelper.h"
 #include "DebugOutput.h"
+#include "OpenXRDebugUtils.h"
+#include "GraphicsAPI_OpenGL.h"
 
 VRManager::VRManager(GraphicsAPI_Type apiType): apiType(apiType) {
-    
+    if (!CheckGraphicsAPI_TypeIsValidForPlatform(apiType)) {
+        std::cout << "ERROR: The provided Graphics API is not valid for this platform." << std::endl;
+        DEBUG_BREAK;
+    }
 }
 
 VRManager::~VRManager() {
@@ -13,6 +18,16 @@ VRManager::~VRManager() {
 
 void VRManager::run() {
     CreateInstance();
+    CreateDebugMessager();
+
+    GetInstanceProperties();
+    GetSystemID();
+
+    CreateSession();
+    DestroySession();
+
+    DestroyDebugMessager();
+    DestroyInstance();
 }
 
 void VRManager::CreateInstance() {
@@ -97,4 +112,47 @@ void VRManager::GetInstanceProperties() {
                                 << XR_VERSION_MAJOR(instanceProperties.runtimeVersion) << "."
                                 << XR_VERSION_MINOR(instanceProperties.runtimeVersion) << "."
                                 << XR_VERSION_PATCH(instanceProperties.runtimeVersion));
+}
+
+//skipping debug because were gonna first r unit
+//unskipping debug because the jelly beans are too big
+void VRManager::CreateDebugMessager() {
+    // Check that "XR_EXT_debug_utils" is in the active Instance Extensions before creating an XrDebugUtilsMessengerEXT.
+    if (IsStringInVector(activeInstanceExtensions, XR_EXT_DEBUG_UTILS_EXTENSION_NAME)) {
+        debugUtilsMessenger = CreateOpenXRDebugUtilsMessenger(xrInstance);  // From OpenXRDebugUtils.h.
+    }
+}
+
+void VRManager::DestroyDebugMessager() {
+    // Check that "XR_EXT_debug_utils" is in the active Instance Extensions before destroying the XrDebugUtilsMessengerEXT.
+    if (debugUtilsMessenger != XR_NULL_HANDLE) {
+        DestroyOpenXRDebugUtilsMessenger(xrInstance, debugUtilsMessenger);  // From OpenXRDebugUtils.h.
+    }
+}
+
+void VRManager::GetSystemID() {
+    // Get the XrSystemId from the instance and the supplied XrFormFactor.
+    XrSystemGetInfo systemGI{XR_TYPE_SYSTEM_GET_INFO};
+    systemGI.formFactor = formFactor;
+    OPENXR_CHECK(xrGetSystem(xrInstance, &systemGI, &systemID), "Failed to get SystemID.");
+
+    // Get the System's properties for some general information about the hardware and the vendor.
+    OPENXR_CHECK(xrGetSystemProperties(xrInstance, systemID, &systemProperties), "Failed to get SystemProperties.");
+}
+
+void VRManager::CreateSession() {
+    XrSessionCreateInfo sessionCI{XR_TYPE_SESSION_CREATE_INFO};
+
+    graphicsAPI = std::make_unique<GraphicsAPI>(xrInstance, systemID);// this is modified
+
+    sessionCI.next = graphicsAPI->GetGraphicsBinding();
+    sessionCI.createFlags = 0;
+    sessionCI.systemId = systemID;
+
+    OPENXR_CHECK(xrCreateSession(xrInstance, &sessionCI, &session), "Failed to create Session.");
+
+}
+
+void VRManager::DestroySession() {
+    OPENXR_CHECK(xrDestroySession(session), "Failed to destroy Session.");
 }

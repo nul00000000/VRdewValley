@@ -14,10 +14,10 @@
 #define WINDOW_HEIGHT 360
 #define WINDOW_TITLE "SPEX VR Project"
 
-int main() {
+void mainGame() {
 	if(!glfwInit()) {
 		fprintf(stderr, "Could not initialize GLFW\n");
-		return 1;
+		exit(1);
 	}
 
 	glfwWindowHint(GLFW_VERSION_MAJOR, 4);
@@ -27,7 +27,7 @@ int main() {
 			WINDOW_TITLE, NULL, NULL);
 	if(!window) {
 		fprintf(stderr, "Window could not be created\n");
-		return 1;
+		exit(1);
 	}
 	glfwMakeContextCurrent(window);
 
@@ -66,4 +66,8 @@ int main() {
 		glfwSwapBuffers(window);
 	}
 
+}
+
+int main() {
+	mainGame();
 }
