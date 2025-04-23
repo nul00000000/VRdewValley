@@ -46,7 +46,7 @@ void mainGame() {
 	shader->use();
 	World world(1, 1, 1.0, 1.0);
 
-	glm::vec3 camPos(1.0, 1.0f, 0.0);
+	glm::vec3 camPos(0.0f, 1.0f, -1.0f);
 	glm::mat4 camMat;
 	glm::mat4 projMat;
 	camMat = glm::translate(glm::identity<glm::mat4>(), camPos);
