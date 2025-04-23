@@ -1,6 +1,9 @@
 #include "shader.h"
 
-BasicShader::BasicShader(GLint screenWidth, GLint screenHeight) : Shader((GLchar*)"C:/Users/nulcr/Documents/VRDewValley/shaders/basic") {//remember to change these when you actually release it
+#define QUOTE(a) quote_(a)
+#define quote_(a) #a
+
+BasicShader::BasicShader(GLint screenWidth, GLint screenHeight) : Shader((GLchar*)QUOTE(SHADER_BASE) "/shaders/basic") {
 	GLint p;
 
 	// string a((GLchar*)"C:/Users/nulcr/Documents/VRDewValley/shaders/basic");

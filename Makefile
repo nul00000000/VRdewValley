@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -IOpenXR/include -Iglad/include -Iglfw/include -Iglm
+CFLAGS = -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -DSHADER_BASE=$(shell pwd)
 
 SOURCE_DIR = src
 OBJ_DIR = objs
