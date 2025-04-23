@@ -10,14 +10,14 @@
 
 class VRManager {
     public:
-        VRManager(void (*renderFunc)(BasicShader* shader, World* world));
+        VRManager(void (*renderFunc)(BasicShader* shader));
         ~VRManager();
 
         int setup();
         
-        void render(glm::vec3 camPos, BasicShader* shader, World* world);
+        void render(glm::vec3 camPos, BasicShader* shader);
     private:
-        void (*renderFunc)(BasicShader* shader, World* world);
+        void (*renderFunc)(BasicShader* shader);
 
         vr::Texture_t leftTexture;
         vr::Texture_t rightTexture;

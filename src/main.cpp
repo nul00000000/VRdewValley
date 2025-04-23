@@ -15,9 +15,11 @@
 #define WINDOW_HEIGHT 360
 #define WINDOW_TITLE "SPEX VR Project"
 
+VRManager* vrm;
+World* world;
+GLFWwindow* window;
 
-
-void render(BasicShader* shader, World* world) {
+void render(BasicShader* shader) {
 	glClearColor(0.3f, 0.9f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -25,7 +27,7 @@ void render(BasicShader* shader, World* world) {
 	world->render(shader);
 }
 
-GLFWwindow* glInit() {
+void glInit() {
 	if(!glfwInit()) {
 		fprintf(stderr, "Could not initialize GLFW\n");
 		exit(1);
@@ -34,7 +36,7 @@ GLFWwindow* glInit() {
 	glfwWindowHint(GLFW_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_VERSION_MINOR, 3);
 
-	GLFWwindow* window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 
+	window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, 
 			WINDOW_TITLE, NULL, NULL);
 	if(!window) {
 		fprintf(stderr, "Window could not be created\n");
@@ -45,10 +47,9 @@ GLFWwindow* glInit() {
 	gladLoadGL();
 	int glfwMajor, glfwMinor, glfwRev;
 	glfwGetVersion(&glfwMajor, &glfwMinor, &glfwRev);
-	return window;
 }
 
-void mainGame(GLFWwindow* window, VRManager* vr) {
+void mainGame() {
 	
 	//report openvr version here
 
@@ -68,8 +69,8 @@ void mainGame(GLFWwindow* window, VRManager* vr) {
 
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
-		
-		vr->render(camPos, shader, &world);
+
+		vrm->render(camPos, shader);
 
 		glfwSwapBuffers(window);
 	}
@@ -77,14 +78,18 @@ void mainGame(GLFWwindow* window, VRManager* vr) {
 }
 
 int main(int argc, char** argv) {
-	GLFWwindow* window = glInit();
-	VRManager vr(&render);
-	if((argc > 1 && !strncmp(argv[0], "-d", 2)) || vr.setup()) {
+	printf("Starting\n");
+	glInit();
+	printf("GL initialized\n");
+	vrm = new VRManager(&render);
+	printf("VR Instanciated\n");
+	if((argc > 1 && !strncmp(argv[0], "-d", 2)) || vrm->setup()) {
 		printf("Desktop Mode\n");
 		//desktopington mode
 	} else {
-		printf("VR Mode\n");
+		printf("VR Mode Initialized\n");
 
 	}
-	mainGame(window, &vr);
+	printf("Starting main loop\n");
+	mainGame();
 }

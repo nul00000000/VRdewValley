@@ -1,6 +1,6 @@
 #include "vr.h"
 
-VRManager::VRManager(void (*renderFunc)(BasicShader* shader, World* world)) {
+VRManager::VRManager(void (*renderFunc)(BasicShader* shader)) {
     this->renderFunc = renderFunc;
     eyes[0] = glm::mat4(1);
     eyes[1] = glm::mat4(1);
@@ -26,7 +26,7 @@ int VRManager::setup() {
     // //maybe change to XR scene?
     vrSystem = vr::VR_Init(&initError, vr::EVRApplicationType::VRApplication_Scene);
 
-    if(initError) {
+    if(initError != vr::EVRInitError::VRInitError_None) {
         printf("OpenVR Initialization failure: %s\n", vr::VR_GetVRInitErrorAsEnglishDescription(initError));
         return 3;
     }
@@ -80,35 +80,35 @@ glm::mat4 hmdToGLM(vr::HmdMatrix34_t hmd) {
 }
 
 void VRManager::createEyesViewMatrix(glm::vec3 translation, glm::mat4 hmdTrans) {
-	eyes[0] = hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Left));
+	eyes[0] = glm::mat4(1);//hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Left));
 	eyes[0] = glm::translate(glm::mat4(1), translation) * hmdTrans * eyes[0];
-	eyes[1] = hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Right));
+	eyes[1] = glm::mat4(1);//hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Right));
 	eyes[1] = glm::translate(glm::mat4(1), translation) * hmdTrans * eyes[1];
 }
 
-void VRManager::render(glm::vec3 camPos, BasicShader* shader, World* world) {
+void VRManager::render(glm::vec3 camPos, BasicShader* shader) {
     createEyesViewMatrix(camPos, tracked[vr::k_unTrackedDeviceIndex_Hmd]);
 	
 	glm::mat4 proj;
-	proj = hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Right, 0.1, 100));
+	proj = glm::mat4(1);//hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Right, 0.1, 100));
     shader->loadProjection(proj);
 
 	// glEnable(GL_MULTISAMPLE);
 	glBindFramebuffer(GL_FRAMEBUFFER, rightFBO->rbHandle);
 	glViewport(0, 0, rightFBO->width, rightFBO->height);
-    renderFunc(shader, world);
+    renderFunc(shader);
     // glDisable(GL_MULTISAMPLE);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, rightFBO->rbHandle);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, rightFBO->handle);
 
 	glBlitFramebuffer(0, 0, rightFBO->width, rightFBO->height, 0, 0, rightFBO->width, rightFBO->height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-    proj = hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Left, 0.1, 100));
+    proj = glm::mat4(1);//hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Left, 0.1, 100));
 
 	// glEnable(GL_MULTISAMPLE);
 	glBindFramebuffer(GL_FRAMEBUFFER, leftFBO->rbHandle);
 	glViewport(0, 0, leftFBO->width, leftFBO->height);
-	renderFunc(shader, world);
+	renderFunc(shader);
 	// glDisable(GL_MULTISAMPLE);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, leftFBO->rbHandle);
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, leftFBO->handle);
@@ -120,7 +120,7 @@ void VRManager::render(glm::vec3 camPos, BasicShader* shader, World* world) {
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glViewport(0, 0, 1280, 720);
-	renderFunc(shader, world);
+	renderFunc(shader);
 
 	leftTexture.eColorSpace = vr::EColorSpace::ColorSpace_Gamma;
 	leftTexture.eType = vr::ETextureType::TextureType_OpenGL;
