@@ -35,6 +35,7 @@ void mainGame() {
 	gladLoadGL();
 	int glfwMajor, glfwMinor, glfwRev;
 	glfwGetVersion(&glfwMajor, &glfwMinor, &glfwRev);
+	//report openvr version here
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
@@ -66,6 +67,8 @@ void mainGame() {
 }
 
 int main() {
+	printf("penis among us\n");
 	mainGame();
 	VRManager vr;
+	vr.setup();
 }

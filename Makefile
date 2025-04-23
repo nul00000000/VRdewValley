@@ -3,13 +3,13 @@
 -include wyatt.make
 
 CC = g++
-CFLAGS := -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -Iheaders -DSHADER_BASE=$(shell pwd) $(WYATT_FLAGS)
+CFLAGS := -Iglad/include -Iglfw/include -Iglm -Iopenvr/include -DSHADER_BASE=$(shell pwd) $(WYATT_FLAGS)
 
 SOURCE_DIR = src
 OBJ_DIR = objs
 
-SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp entity.cpp vr.cpp
-HEADER_NAMES = shader.h light.h vr.h world.h model.h entity.h
+SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp entity.cpp vr.cpp fbo.cpp
+HEADER_NAMES = shader.h light.h vr.h world.h model.h entity.h fbo.h
 SOURCES = $(addprefix $(SOURCE_DIR)/, $(SOURCE_NAMES))
 GLAD_OBJ = glad.o
 OBJ_NAMES = $(SOURCE_NAMES:.cpp=.o) $(GLAD_OBJ)
