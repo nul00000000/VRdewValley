@@ -95,35 +95,57 @@ void Model::renderUnsafe() {
 }
 
 GLfloat* Model::cubeVertices(GLfloat w, GLfloat h, GLfloat d) {
-	return new GLfloat[72]{
-		-w / 2, h / 2, d / 2, //top left front
-		w / 2, h / 2, d / 2, // top right front
-		w / 2, -h / 2, d / 2, //bottom right front
-		-w / 2, -h / 2, d / 2, //bottom left front
-
-		w / 2, h / 2, -d / 2, // top right back
-		-w / 2, h / 2, -d / 2, //top left back
-		-w / 2, -h / 2, -d / 2, //bottom left back
-		w / 2, -h / 2, -d / 2, //bottom right back
-
-		-w / 2, h / 2, -d / 2,
-		-w / 2, h / 2, d / 2,
-		-w / 2, -h / 2, d / 2,
+	return new GLfloat[3*36]{
+		 w / 2,  h / 2, -d / 2,
+		 w / 2, -h / 2, -d / 2,
 		-w / 2, -h / 2, -d / 2,
 
-		w / 2, h / 2, d / 2,
-		w / 2, h / 2, -d / 2,
-		w / 2, -h / 2, -d / 2,
-		w / 2, -h / 2, d / 2,
-
-		-w / 2, h / 2, -d / 2,
-		w / 2, h / 2, -d / 2,
-		w / 2, h / 2, d / 2,
-		-w / 2, h / 2, d / 2,
-
-		w / 2, -h / 2, -d / 2,
+		-w / 2,  h / 2, -d / 2,
 		-w / 2, -h / 2, -d / 2,
-		-w / 2, -h / 2, d / 2,
-		w / 2, -h / 2, d / 2
+		 w / 2,  h / 2, -d / 2,
+
+		
+		 w / 2,  h / 2,  d / 2,
+		 w / 2, -h / 2,  d / 2,
+		-w / 2, -h / 2,  d / 2,
+
+		-w / 2,  h / 2,  d / 2,
+		-w / 2, -h / 2,  d / 2,
+		 w / 2,  h / 2,  d / 2,
+
+
+		 w / 2,  h / 2,  d / 2,
+		 w / 2,  h / 2, -d / 2,
+		-w / 2,  h / 2, -d / 2,
+
+		-w / 2,  h / 2,  d / 2,
+		-w / 2,  h / 2, -d / 2,
+		 w / 2,  h / 2,  d / 2,
+
+
+		 w / 2, -h / 2,  d / 2,
+		 w / 2, -h / 2, -d / 2,
+		-w / 2, -h / 2, -d / 2,
+
+		-w / 2, -h / 2,  d / 2,
+		-w / 2, -h / 2, -d / 2,
+		 w / 2, -h / 2,  d / 2,
+
+		 w / 2,  h / 2,  d / 2,
+		 w / 2,  h / 2, -d / 2,
+		 w / 2, -h / 2, -d / 2,
+
+		 w / 2, -h / 2,  d / 2,
+		 w / 2, -h / 2, -d / 2,
+		 w / 2,  h / 2,  d / 2,
+
+
+		-w / 2,  h / 2,  d / 2,
+		-w / 2,  h / 2, -d / 2,
+		-w / 2, -h / 2, -d / 2,
+
+		-w / 2, -h / 2,  d / 2,
+		-w / 2, -h / 2, -d / 2,
+		-w / 2,  h / 2,  d / 2,
 	};
 }

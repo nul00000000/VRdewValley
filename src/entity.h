@@ -11,7 +11,13 @@ public:
 	~Entity();
 
 	glm::vec3 position;
+	glm::vec3 euler_angles;
+
 	Model *mModel;
 
 	void render(BasicShader *shader);
+
+	void translate(glm::vec3 translation);
+
+	void rotate(glm::vec3 uh);
 };
