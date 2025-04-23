@@ -1,6 +1,5 @@
 #include <stdio.h>
 
-#include <openxr/openxr.h>
 #ifndef GL_INCLUDED
 #define GL_INCLUDED
 #include <glad/glad.h>
@@ -36,11 +35,6 @@ void mainGame() {
 	gladLoadGL();
 	int glfwMajor, glfwMinor, glfwRev;
 	glfwGetVersion(&glfwMajor, &glfwMinor, &glfwRev);
-	uint64_t xrVersion = XrVersion();
-	printf("OpenXR version: %d.%d.%d, GLFW version: %d.%d.%d, GL version: %d.%d\n", 
-			XR_VERSION_MAJOR(xrVersion), XR_VERSION_MINOR(xrVersion),
-			XR_VERSION_PATCH(xrVersion), glfwMajor, glfwMinor, glfwRev,
-			GLVersion.major, GLVersion.minor);
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
