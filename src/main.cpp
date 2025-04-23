@@ -54,7 +54,7 @@ void mainGame(GLFWwindow* window, VRManager* vr) {
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
-	World world(1, 1, 1.0, 1.0);
+	World world(60, 60, 1.0, 10.0);
 
 	glm::vec3 camPos(0.0f, 1.0f, 1.0f);
 	glm::mat4 camMat;
@@ -68,9 +68,8 @@ void mainGame(GLFWwindow* window, VRManager* vr) {
 
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
-
+		
 		vr->render(camPos, shader, &world);
-		// render(shader, &world);
 
 		glfwSwapBuffers(window);
 	}
