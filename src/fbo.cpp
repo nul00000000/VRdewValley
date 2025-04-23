@@ -2,7 +2,6 @@
 
 FBO::FBO(GLuint width, GLuint height) {
 	this->width = width;
-	glGetError();
 	this->height = height;
 	glGenFramebuffers(1, &rbHandle);
 	glBindFramebuffer(GL_FRAMEBUFFER, rbHandle);
