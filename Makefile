@@ -1,5 +1,7 @@
 CC = g++
-CFLAGS = -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -DSHADER_BASE=$(shell pwd)
+CFLAGS := -IOpenXR/include -Iglad/include -Iglfw/include -Iglm -DSHADER_BASE=$(shell pwd)
+
+-include adam.make
 
 SOURCE_DIR = src
 OBJ_DIR = objs
@@ -11,7 +13,7 @@ OBJ_NAMES = $(SOURCE_NAMES:.cpp=.o) $(GLAD_OBJ)
 OBJS = $(addprefix $(OBJ_DIR)/, $(OBJ_NAMES))
 
 GLFW_OBJS = $(wildcard glfw/build/src/CMakeFiles/glfw.dir/*.c.o glfw/build/src/CMakeFiles/glfw.dir/*.c.obj)
-TARGET = a.exe
+TARGET = vdv
 
 .PHONY: all clean
 
@@ -21,7 +23,7 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 
 $(TARGET): $(OBJS)
-	$(CC) $^ $(GLFW_OBJS) -o $(TARGET)
+	$(CC) $^ $(GLFW_OBJS) -lgdi32 -o $(TARGET)
 	@echo "Totally Unreal Engine is real"
 
 $(OBJ_DIR):
