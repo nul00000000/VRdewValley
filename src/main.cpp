@@ -15,7 +15,17 @@
 #define WINDOW_HEIGHT 360
 #define WINDOW_TITLE "SPEX VR Project"
 
-void mainGame() {
+
+
+void render(BasicShader* shader, World* world) {
+	glClearColor(0.3f, 0.9f, 0.5f, 1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	world->render(shader);
+}
+
+GLFWwindow* glInit() {
 	if(!glfwInit()) {
 		fprintf(stderr, "Could not initialize GLFW\n");
 		exit(1);
@@ -35,6 +45,11 @@ void mainGame() {
 	gladLoadGL();
 	int glfwMajor, glfwMinor, glfwRev;
 	glfwGetVersion(&glfwMajor, &glfwMinor, &glfwRev);
+	return window;
+}
+
+void mainGame(GLFWwindow* window, VRManager* vr) {
+	
 	//report openvr version here
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -55,28 +70,23 @@ void mainGame() {
 
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
-
-		//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-		double weather = world.getWeather(t);
-
-		t++;
-
-		glClearColor(0.9f*weather, 0.1f*weather, 0.2f*weather, 1.0f);
-		glEnable(GL_DEPTH_TEST);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-		world.render(shader);
-		// terrainMesh->render();
+		
+		vr->render(camPos, shader, &world);
 
 		glfwSwapBuffers(window);
 	}
 
 }
 
-int main() {
-	printf("penis among us\n");
-	mainGame();
-	VRManager vr;
-	vr.setup();
+int main(int argc, char** argv) {
+	GLFWwindow* window = glInit();
+	VRManager vr(&render);
+	if((argc > 1 && !strncmp(argv[0], "-d", 2)) || vr.setup()) {
+		printf("Desktop Mode\n");
+		//desktopington mode
+	} else {
+		printf("VR Mode\n");
+
+	}
+	mainGame(window, &vr);
 }
