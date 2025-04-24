@@ -80,18 +80,27 @@ glm::mat4 hmdToGLM(vr::HmdMatrix34_t hmd) {
 }
 
 void VRManager::createEyesViewMatrix(glm::vec3 translation, glm::mat4 hmdTrans) {
-	eyes[0] = glm::mat4(1);//hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Left));
+	eyes[0] = hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Left));
 	eyes[0] = glm::translate(glm::mat4(1), translation) * hmdTrans * eyes[0];
-	eyes[1] = glm::mat4(1);//hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Right));
+	// eyes[0] = glm::translate(glm::mat4(1), translation) * eyes[0];
+	eyes[1] = hmdToGLM(vrSystem->GetEyeToHeadTransform(vr::Eye_Right));
 	eyes[1] = glm::translate(glm::mat4(1), translation) * hmdTrans * eyes[1];
+	// eyes[1] = glm::translate(glm::mat4(1), translation) * eyes[1];
 }
 
 void VRManager::render(glm::vec3 camPos, BasicShader* shader) {
+	vr::VRCompositor()->WaitGetPoses(pose, vr::k_unMaxTrackedDeviceCount, NULL, 0);
+	for (int i = 0; i < vr::k_unMaxTrackedDeviceCount; i++) {
+		if (pose[i].bPoseIsValid) {
+			tracked[i] = hmdToGLM(pose[i].mDeviceToAbsoluteTracking);
+		}
+	}
     createEyesViewMatrix(camPos, tracked[vr::k_unTrackedDeviceIndex_Hmd]);
 	
 	glm::mat4 proj;
-	proj = glm::mat4(1);//hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Right, 0.1, 100));
+	proj = hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Right, 0.1, 100));
     shader->loadProjection(proj);
+	shader->loadCamera(eyes[1]);
 
 	// glEnable(GL_MULTISAMPLE);
 	glBindFramebuffer(GL_FRAMEBUFFER, rightFBO->rbHandle);
@@ -103,8 +112,10 @@ void VRManager::render(glm::vec3 camPos, BasicShader* shader) {
 
 	glBlitFramebuffer(0, 0, rightFBO->width, rightFBO->height, 0, 0, rightFBO->width, rightFBO->height, GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-    proj = glm::mat4(1);//hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Left, 0.1, 100));
-
+    proj = hmdToGLM(vrSystem->GetProjectionMatrix(vr::Eye_Left, 0.1, 100));
+	
+	shader->loadProjection(proj);
+	shader->loadCamera(eyes[0]);
 	// glEnable(GL_MULTISAMPLE);
 	glBindFramebuffer(GL_FRAMEBUFFER, leftFBO->rbHandle);
 	glViewport(0, 0, leftFBO->width, leftFBO->height);
@@ -119,7 +130,7 @@ void VRManager::render(glm::vec3 camPos, BasicShader* shader) {
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
 
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glViewport(0, 0, 1280, 720);
+	glViewport(0, 0, 640, 360);
 	renderFunc(shader);
 
 	leftTexture.eColorSpace = vr::EColorSpace::ColorSpace_Gamma;
@@ -131,4 +142,5 @@ void VRManager::render(glm::vec3 camPos, BasicShader* shader) {
 	rightTexture.handle = (void*)(uintptr_t)(rightFBO->resolveHandle);
 	vr::VRCompositor()->Submit(vr::Eye_Left, &leftTexture, NULL);
 	vr::VRCompositor()->Submit(vr::Eye_Right, &rightTexture, NULL);
+	glFlush();
 }

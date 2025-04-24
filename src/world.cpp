@@ -65,10 +65,10 @@ void World::render(BasicShader* shader) {
 
 	terrainMesh->render();
 
-	for (auto &entity : entities) {
-		entity.render(shader);
-		entity.rotate({0.0f, 0.001f * ((float) rand())/RAND_MAX, 0.0f});
-	}
+	//for (auto &entity : entities) {
+		// entity.render(shader);
+		// entity.rotate({0.0f, 0.001f * ((float) rand())/RAND_MAX, 0.0f});
+	//}
 }
 
 double World::getWeather(double t) {

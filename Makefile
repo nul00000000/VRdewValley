@@ -3,7 +3,7 @@
 -include wyatt.make
 
 CC = g++
-CFLAGS := -Iglad/include -Iglfw/include -Iglm -Iopenvr/include -DSHADER_BASE=$(shell pwd) $(WYATT_FLAGS)
+CFLAGS := -Iglad/include -Iglfw/include -Iglm -Iopenvr/include -DSHADER_BASE=$(shell pwd) $(WYATT_FLAGS) -g
 
 SOURCE_DIR = src
 OBJ_DIR = objs

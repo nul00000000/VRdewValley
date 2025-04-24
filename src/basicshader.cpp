@@ -82,7 +82,8 @@ void BasicShader::loadTransform(glm::mat4 mTransform, GLfloat shinyness) {
 }
 
 void BasicShader::loadCamera(glm::mat4 mCamera) {
-	loadMatrixUniform(4, glm::value_ptr(mCamera), camLoc);
+	glm::mat4 temp = glm::inverse(mCamera);
+	loadMatrixUniform(4, glm::value_ptr(temp), camLoc);
 }
 
 void BasicShader::loadSkyLight(glm::vec3 color) {

@@ -55,12 +55,12 @@ void mainGame() {
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
-	World world(60, 60, 1.0, 10.0);
+	world = new World(60, 60, 1.0, 10.0);
 
-	glm::vec3 camPos(0.0f, 1.0f, 1.0f);
+	glm::vec3 camPos(0.0f, 1.0f, 40.0f);
 	glm::mat4 camMat;
 	glm::mat4 projMat;
-	camMat = glm::translate(glm::identity<glm::mat4>(), -camPos);
+	camMat = glm::translate(glm::identity<glm::mat4>(), camPos);
 	projMat = glm::perspective(glm::radians(75.0f), 16.0f/9.0f, 0.1f, 180.0f);
 
 	shader->loadCamera(camMat);

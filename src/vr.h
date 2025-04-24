@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdio.h>
-#include "openvr.h"
+#include "openvr_mingw.hpp"
 #include "glm/glm.hpp"
 #include <glm/ext/matrix_transform.hpp>
 #include "fbo.h"
