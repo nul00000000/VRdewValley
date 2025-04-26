@@ -42,16 +42,20 @@ World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 		}
 	}
 
-	this->terrainMesh = new Model(verts, 6 * 3 * xTiles * yTiles, 1.0f, 1.0f, 1.0f, true);
+	this->terrainMesh = new Model(verts, 6 * 3 * xTiles * yTiles, 0.6f, 0.2f, 0.2f, true);
 
 	this->entities = std::vector<Entity>();
 
 	entities.push_back(
-		Entity((glm::vec3) {0.0f, 0.6f, -1.0f}, new Model(Model::cubeVertices(1, 1, 1),108,0.5,0.5,0.5,false))
+		Entity((glm::vec3) {0.64f, 1.6f, -2.0f}, new Model(Model::cubeVertices(.1, .1, .1),108,0.5,0.5,0.5,false))
 	);
+	
 	entities.push_back(
-		Entity((glm::vec3) {1.0f, 0.6f, -1.0f}, new Model(Model::cubeVertices(.1, .1, .2),108,0.5,0.5,0.5,false))
+		Entity((glm::vec3) {3.0f, 1.6f, -1.0f}, new Model(Model::cubeVertices(.1, .1, .1),108,0.5,0.5,0.5,false))
 	);
+
+	this->leftHand = new Entity((glm::vec3){0}, new Model(Model::cubeVertices(.1,.1,.1),108,0.5,0.5,0.5,false));
+	this->rightHand = new Entity((glm::vec3){0}, new Model(Model::cubeVertices(.1,.1,.1),108,0.5,0.5,0.5,false));
 
 	power = new Power(1.0, 2.0);
 }
@@ -65,10 +69,13 @@ void World::render(BasicShader* shader) {
 
 	terrainMesh->render();
 
-	//for (auto &entity : entities) {
-		// entity.render(shader);
-		// entity.rotate({0.0f, 0.001f * ((float) rand())/RAND_MAX, 0.0f});
-	//}
+	leftHand->render(shader);
+	rightHand->render(shader);
+
+	for (auto &entity : entities) {
+		entity.render(shader);
+		//entity.rotate({0.0f, 0.001f * ((float) rand())/RAND_MAX, 0.0f});
+	}
 }
 
 double World::getWeather(double t) {

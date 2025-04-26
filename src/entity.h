@@ -11,13 +11,15 @@ public:
 	~Entity();
 
 	glm::vec3 position;
-	glm::vec3 euler_angles;
+	glm::quat rotation;
 
 	Model *mModel;
 
 	void render(BasicShader *shader);
 
 	void translate(glm::vec3 translation);
+	void moveTo(glm::vec3 pos);
 
-	void rotate(glm::vec3 uh);
+	void rotate(glm::quat rot);
+	void setRotation(glm::quat rot);
 };

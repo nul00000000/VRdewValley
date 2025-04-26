@@ -20,7 +20,7 @@ World* world;
 GLFWwindow* window;
 
 void render(BasicShader* shader) {
-	glClearColor(0.3f, 0.9f, 0.5f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -55,9 +55,9 @@ void mainGame() {
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
-	world = new World(60, 60, 1.0, 10.0);
+	world = new World(600, 600, 1.0, 4.0);
 
-	glm::vec3 camPos(0.0f, 1.0f, 40.0f);
+	glm::vec3 camPos(0.0f, 2.0f, 0.0f);
 	glm::mat4 camMat;
 	glm::mat4 projMat;
 	camMat = glm::translate(glm::identity<glm::mat4>(), camPos);
@@ -72,6 +72,7 @@ void mainGame() {
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
 
+		vrm->updateInput();
 		vrm->render(camPos, shader);
 
 		glfwSwapBuffers(window);

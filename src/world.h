@@ -16,6 +16,8 @@ public:
 	void update(double t);
 
 	std::vector<Entity> entities;
+	Entity *leftHand;
+	Entity *rightHand;
 	Power *power;
 
 private:

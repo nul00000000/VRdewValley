@@ -8,13 +8,23 @@
 #include "shader.h"
 #include "world.h"
 
+typedef struct {
+    glm::vec3 pos;
+    glm::quat rot;
+    glm::vec3 scale; //this cannot possibly do anything
+} TrackedDevice;
+
 class VRManager {
     public:
         VRManager(void (*renderFunc)(BasicShader* shader));
         ~VRManager();
 
+        TrackedDevice leftController;
+        TrackedDevice rightController;
+
         int setup();
         
+        void updateInput();
         void render(glm::vec3 camPos, BasicShader* shader);
     private:
         void (*renderFunc)(BasicShader* shader);
@@ -37,9 +47,13 @@ class VRManager {
         FBO* leftFBO;
         FBO* rightFBO;
 
+        glm::quat rotL;
+        glm::quat rotR;
+
         glm::mat4 eyes[2];
 
         void createEyesViewMatrix(glm::vec3 translation, glm::mat4 hmdTrans);
+        void renderWithOverlay(glm::vec3 camPos, BasicShader* shader);
 };
 
 glm::mat4 hmdToGLM(vr::HmdMatrix44_t hmd);
