@@ -3,6 +3,12 @@
 
 #include <glm/gtc/noise.hpp>
 
+double height(float x, float y, float scale) {
+	return glm::perlin((glm::vec2) {((float) x)/scale, ((float) y)/scale})
+	+glm::perlin((glm::vec2) {((float) 2*x)/scale, ((float) 2*y)/scale})/2
+	+glm::perlin((glm::vec2) {((float) 4*x)/scale, ((float) 4*y)/scale})/4;
+}
+
 World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 
 	GLfloat* verts = new GLfloat[6 * 3 * xTiles * yTiles];
@@ -12,33 +18,27 @@ World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 		for(int y = 0; y < yTiles; y++) {
 			verts[(x+y*xTiles)*18 +  0] = (x+1-xTiles/2)*tileSize;
 			verts[(x+y*xTiles)*18 +  2] = (y+1-yTiles/2)*tileSize;
-			verts[(x+y*xTiles)*18 +  1] = heightMag *
-				glm::perlin((glm::vec2) {((float) x+1)/scale, ((float) y+1)/scale});
+			verts[(x+y*xTiles)*18 +  1] = heightMag * height(x+1, y+1, scale);
 
 			verts[(x+y*xTiles)*18 +  3] = (x+0-xTiles/2)*tileSize;
 			verts[(x+y*xTiles)*18 +  5] = (y+0-yTiles/2)*tileSize;
-			verts[(x+y*xTiles)*18 +  4] = heightMag *
-				glm::perlin((glm::vec2) {((float) x+0)/scale, ((float) y+0)/scale});
+			verts[(x+y*xTiles)*18 +  4] = heightMag * height(x+0, y+0, scale);
 
 			verts[(x+y*xTiles)*18 +  6] = (x+1-xTiles/2)*tileSize;
 			verts[(x+y*xTiles)*18 +  8] = (y+0-yTiles/2)*tileSize;
-			verts[(x+y*xTiles)*18 +  7] = heightMag *
-				glm::perlin((glm::vec2) {((float) x+1)/scale, ((float) y+0)/scale});
+			verts[(x+y*xTiles)*18 +  7] = heightMag * height(x+1, y+0, scale);
 
 			verts[(x+y*xTiles)*18 +  9] = (x+0-xTiles/2)*tileSize;
 			verts[(x+y*xTiles)*18 + 11] = (y+1-yTiles/2)*tileSize;
-			verts[(x+y*xTiles)*18 + 10] = heightMag *
-				glm::perlin((glm::vec2) {((float) x+0)/scale, ((float) y+1)/scale});
+			verts[(x+y*xTiles)*18 + 10] = heightMag * height(x+0, y+1, scale);
 
 			verts[(x+y*xTiles)*18 + 12] = (x+0-xTiles/2)*tileSize;
 			verts[(x+y*xTiles)*18 + 14] = (y+0-yTiles/2)*tileSize;
-			verts[(x+y*xTiles)*18 + 13] = heightMag *
-				glm::perlin((glm::vec2) {((float) x+0)/scale, ((float) y+0)/scale});
+			verts[(x+y*xTiles)*18 + 13] = heightMag * height(x+0, y+0, scale);
 
 			verts[(x+y*xTiles)*18 + 15] = (x+1-xTiles/2)*tileSize;
 			verts[(x+y*xTiles)*18 + 17] = (y+1-yTiles/2)*tileSize;
-			verts[(x+y*xTiles)*18 + 16] = heightMag *
-				glm::perlin((glm::vec2) {((float) x+1)/scale, ((float) y+1)/scale});
+			verts[(x+y*xTiles)*18 + 16] = heightMag * height(x+1, y+1, scale);
 		}
 	}
 
