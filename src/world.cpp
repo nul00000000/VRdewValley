@@ -42,7 +42,7 @@ World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 		}
 	}
 
-	this->terrainMesh = new Model(verts, 6 * 3 * xTiles * yTiles, 0.6f, 0.2f, 0.2f, true);
+	this->terrainMesh = new Model(verts, 6 * 3 * xTiles * yTiles, 0.35, 0.26, 0.16f, true);
 
 	this->entities = std::vector<Entity>();
 

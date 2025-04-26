@@ -98,19 +98,19 @@ GLfloat* Model::cubeVertices(GLfloat w, GLfloat h, GLfloat d) {
 	return new GLfloat[108]{
 		 w/2,  h/2, -d/2,
 		 w/2, -h/2, -d/2,
-		-w/2, -h/2, -d/2,
+		 -w/2, -h/2, -d/2,
 
 		-w/2,  h/2, -d/2,
+		w/2,  h/2, -d/2,
 		-w/2, -h/2, -d/2,
-		 w/2,  h/2, -d/2,
 
 		 w/2,  h/2,  d/2,
 		 w/2, -h/2,  d/2,
 		-w/2, -h/2,  d/2,
 
 		-w/2,  h/2,  d/2,
+		w/2,  h/2,  d/2,
 		-w/2, -h/2,  d/2,
-		 w/2,  h/2,  d/2,
 
 
 		 w/2,  h/2,  d/2,
@@ -130,8 +130,8 @@ GLfloat* Model::cubeVertices(GLfloat w, GLfloat h, GLfloat d) {
 		-w/2, -h/2,  d/2,
 		 w/2, -h/2,  d/2,
 
-		 w/2,  h/2,  d/2,
 		 w/2,  h/2, -d/2,
+		 w/2,  h/2,  d/2,
 		 w/2, -h/2, -d/2,
 
 		 w/2, -h/2,  d/2,
@@ -139,8 +139,8 @@ GLfloat* Model::cubeVertices(GLfloat w, GLfloat h, GLfloat d) {
 		 w/2,  h/2,  d/2,
 
 		-w/2,  h/2,  d/2,
-		-w/2,  h/2, -d/2,
 		-w/2, -h/2, -d/2,
+		-w/2,  h/2, -d/2,
 
 		-w/2, -h/2,  d/2,
 		-w/2, -h/2, -d/2,

@@ -20,7 +20,7 @@ World* world;
 GLFWwindow* window;
 
 void render(BasicShader* shader) {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(.78, .66, .57, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
