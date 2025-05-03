@@ -8,7 +8,7 @@ CFLAGS := -Iglad/include -Iglfw/include -Iglm -Iopenvr/include -DSHADER_BASE=$(s
 SOURCE_DIR = src
 OBJ_DIR = objs
 
-SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp entity.cpp vr.cpp fbo.cpp power.cpp
+SOURCE_NAMES = main.cpp model.cpp shader.cpp basicshader.cpp light.cpp world.cpp entity.cpp vr.cpp fbo.cpp power.cpp skyboxshader.cpp
 HEADER_NAMES = shader.h light.h vr.h world.h model.h entity.h fbo.h power.h
 SOURCES = $(addprefix $(SOURCE_DIR)/, $(SOURCE_NAMES))
 GLAD_OBJ = glad.o

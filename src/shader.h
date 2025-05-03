@@ -62,3 +62,20 @@ protected:
 	void bindAttributes();
 	void getUniforms();
 };
+
+class SkyboxShader : public Shader {
+public:
+	const GLfloat FOV = 90.0f;
+	const GLfloat NEAR_PLANE = 0.001f;
+	const GLfloat FAR_PLANE = 16.0f;
+	GLint transLoc, camLoc, projLoc;
+	SkyboxShader(GLint screenWidth, GLint screenHeight);
+	SkyboxShader();
+	~SkyboxShader();
+	void loadProjection(glm::mat4 proj);
+	void loadCamera(glm::mat4 mCamera);
+	void loadTransform(glm::mat4 mTransform);
+protected:
+	void bindAttributes();
+	void getUniforms();
+};

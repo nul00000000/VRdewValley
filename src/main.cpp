@@ -55,7 +55,7 @@ void mainGame() {
 
 	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
-	world = new World(600, 600, 1.0, 4.0);
+	world = new World(600, 600, 1.0, 1.0);
 
 	glm::vec3 camPos(0.0f, 2.0f, 0.0f);
 	glm::mat4 camMat;

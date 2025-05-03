@@ -4,9 +4,13 @@
 #include <glm/gtc/noise.hpp>
 
 double height(float x, float y, float scale) {
-	return glm::perlin((glm::vec2) {((float) x)/scale, ((float) y)/scale})
-	+glm::perlin((glm::vec2) {((float) 2*x)/scale, ((float) 2*y)/scale})/2
-	+glm::perlin((glm::vec2) {((float) 4*x)/scale, ((float) 4*y)/scale})/4;
+	double total = 0;
+
+	for (int i = 0; i < 5; i++) {
+		total += glm::perlin((glm::vec2) {((float) x/(1<<i))/scale, ((float) y/(1<<i))/scale})*(1<<i);
+	}
+
+	return total;
 }
 
 World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
@@ -57,6 +61,8 @@ World::World(int xTiles, int yTiles, double tileSize, double heightMag) {
 	this->leftHand = new Entity((glm::vec3){0}, new Model(Model::cubeVertices(.1,.1,.1),108,0.5,0.5,0.5,false));
 	this->rightHand = new Entity((glm::vec3){0}, new Model(Model::cubeVertices(.1,.1,.1),108,0.5,0.5,0.5,false));
 
+	this->skybox = new Model(Model::cubeVertices(600, 600, 600), 108, 0.0, 0.0, 0.0, false);
+
 	power = new Power(1.0, 2.0);
 }
 
@@ -64,13 +70,18 @@ World::~World() {
 	delete terrainMesh;
 }
 
-void World::render(BasicShader* shader) {
+void World::render(BasicShader* shader, SkyboxShader* skyShader) {
+	shader->use();
 	shader->loadTransform(glm::identity<glm::mat4>(), 0.3f);
 
 	terrainMesh->render();
 
 	leftHand->render(shader);
 	rightHand->render(shader);
+
+	//meow
+	skyShader->use();
+	skybox->render();
 
 	for (auto &entity : entities) {
 		entity.render(shader);

@@ -18,6 +18,7 @@ public:
 	std::vector<Entity> entities;
 	Entity *leftHand;
 	Entity *rightHand;
+	Model* skybox;
 	Power *power;
 
 private:
