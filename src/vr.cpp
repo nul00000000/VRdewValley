@@ -30,7 +30,7 @@ int VRManager::setup() {
     }
 
     // //maybe change to XR scene?
-    vrSystem = vr::VR_Init(&initError, vr::EVRApplicationType::VRApplication_OpenXRScene);
+    vrSystem = vr::VR_Init(&initError, vr::EVRApplicationType::VRApplication_Scene);
 
     if(initError != vr::EVRInitError::VRInitError_None) {
         printf("OpenVR Initialization failure: %s\n", vr::VR_GetVRInitErrorAsEnglishDescription(initError));
@@ -42,12 +42,6 @@ int VRManager::setup() {
         return 4;
     }
 
-	printf("to be clear\n");
-	vrSystem->GetEyeToHeadTransform(vr::Eye_Left);
-	vrSystem->GetEyeToHeadTransform(vr::Eye_Right);
-	vrSystem->GetProjectionMatrix(vr::Eye_Left, 0.1f, 100.0f);
-	vrSystem->GetProjectionMatrix(vr::Eye_Right, 0.1f, 100.0f);
-	printf("let me be frank\n");
     vr::VRInput()->SetActionManifestPath("C:/Users/Admin/Documents/manifest.json");
 
     vr::VRInput()->GetActionHandle("/actions/main/in/place", &actionPlace);
@@ -55,11 +49,10 @@ int VRManager::setup() {
 	vr::VRInput()->GetActionHandle("/actions/main/in/move", &actionMove);
 	vr::VRInput()->GetActionSetHandle("/actions/main", &actionSetMain);
 
-	
     pose = new vr::TrackedDevicePose_t[vr::k_unMaxTrackedDeviceCount];
     actionSet = new vr::VRActiveActionSet_t[2];
     tracked = new glm::mat4[vr::k_unMaxTrackedDeviceCount];
-	
+
     uint32_t w, h;
     vrSystem->GetRecommendedRenderTargetSize(&w, &h);
 	rightFBO = new FBO(w, h);
@@ -129,15 +122,6 @@ void VRManager::renderWithOverlay(glm::vec3 camPos, BasicShader* shader) {
 	world->rightHand->moveTo(posR);
 	world->rightHand->setRotation(glm::eulerAngles(rotR));
 }
-
-// void VRManager::update() {
-// 	vr::VRCompositor()->WaitGetPoses(pose, vr::k_unMaxTrackedDeviceCount, nullptr, NULL);
-// 	for (int i = 0; i < vr::k_unMaxTrackedDeviceCount; i++) {
-// 		if (pose[i].bPoseIsValid) {
-// 			tracked[i] = hmdToGLM(pose[i].mDeviceToAbsoluteTracking);
-// 		}
-// 	}
-// }
 
 void VRManager::render(glm::vec3 camPos, BasicShader* shader) {
 	vr::VRCompositor()->WaitGetPoses(pose, vr::k_unMaxTrackedDeviceCount, NULL, 0);

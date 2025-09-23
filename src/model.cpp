@@ -75,7 +75,6 @@ void Model::storeData(GLint index, GLint size, GLint bufferLength, GLfloat* buff
 }
 
 void Model::render() {
-	printf("ha ha!\n");
 	renderUnsafe();
 	glBindVertexArray(0);
 }

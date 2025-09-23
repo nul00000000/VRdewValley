@@ -18,9 +18,6 @@
 VRManager* vrm;
 World* world;
 GLFWwindow* window;
-BasicShader* shader;
-
-glm::vec3 camPos(0.0f, 1.0f, 1.0f);
 
 void render(BasicShader* shader) {
 	glClearColor(.78, .66, .57, 1.0f);
@@ -48,21 +45,19 @@ void glInit() {
 	glfwMakeContextCurrent(window);
 
 	gladLoadGL();
-}
-
-void objectsInit() {
-	shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
-	world = new World(60, 60, 1.0, 10.0);
+	int glfwMajor, glfwMinor, glfwRev;
+	glfwGetVersion(&glfwMajor, &glfwMinor, &glfwRev);
 }
 
 void mainGame() {
-	double t;
+	
+	//report openvr version here
 
+	BasicShader* shader = new BasicShader(WINDOW_WIDTH, WINDOW_HEIGHT);
 	shader->use();
 	world = new World(600, 600, 1.0, 1.0);
 
 	glm::vec3 camPos(0.0f, 2.0f, 0.0f);
-
 	glm::mat4 camMat;
 	glm::mat4 projMat;
 	camMat = glm::translate(glm::identity<glm::mat4>(), camPos);
@@ -71,8 +66,12 @@ void mainGame() {
 	shader->loadCamera(camMat);
 	shader->loadProjection(projMat);
 	shader->loadSkyLight({1.0f,1.0f,1.0f});
+
+	double t;
+
 	while(!glfwWindowShouldClose(window)) {
 		glfwPollEvents();
+
 		vrm->updateInput();
 		vrm->render(camPos, shader);
 
@@ -84,10 +83,16 @@ void mainGame() {
 int main(int argc, char** argv) {
 	printf("Starting\n");
 	glInit();
-	objectsInit();
 	printf("GL initialized\n");
 	vrm = new VRManager(&render);
-	vrm->setup();
+	printf("VR Instanciated\n");
+	if((argc > 1 && !strncmp(argv[0], "-d", 2)) || vrm->setup()) {
+		printf("Desktop Mode\n");
+		//desktopington mode
+	} else {
+		printf("VR Mode Initialized\n");
+
+	}
 	printf("Starting main loop\n");
 	mainGame();
 }
